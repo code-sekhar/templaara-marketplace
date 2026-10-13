@@ -1,0 +1,23 @@
+[templaara]
+user = templaara-web
+group = templaara-web
+listen = /run/php/templaara-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+pm = dynamic
+pm.max_children = 8
+pm.start_servers = 2
+pm.min_spare_servers = 2
+pm.max_spare_servers = 4
+pm.max_requests = 500
+catch_workers_output = yes
+clear_env = yes
+security.limit_extensions = .php
+php_admin_flag[display_errors] = off
+php_admin_flag[log_errors] = on
+php_admin_value[upload_max_filesize] = 512M
+php_admin_value[post_max_size] = 530M
+php_admin_value[memory_limit] = 256M
+request_terminate_timeout = 75s
+# Match PHP CLI/FPM versions and extensions; size the pool against DB limits.
+# Mount restrictive shared .env or inject reviewed environment through the service.

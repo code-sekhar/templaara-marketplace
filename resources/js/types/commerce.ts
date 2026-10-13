@@ -1,0 +1,106 @@
+import type { PublicImage } from './marketplace';
+export type CartOffer = {
+    offer_id: number;
+    name: string;
+    price: string;
+    license_type: string;
+    activation_limit: number;
+    support_period_days: number | null;
+    updates_period_days: number | null;
+};
+export type CartData = {
+    currency: string | null;
+    checkout_key: string;
+    subtotal: string;
+    total: string;
+    valid: boolean;
+    items: {
+        id: number;
+        slug: string | null;
+        name: string;
+        offer_id: number | null;
+        product_currency: string | null;
+        price: string;
+        previous_price: string;
+        issue: string | null;
+        category: { name: string; slug: string } | null;
+        cover: PublicImage | null;
+        offers: CartOffer[];
+    }[];
+};
+export type OrderSummary = {
+    order_number: string;
+    invoice_number: string | null;
+    customer_name: string;
+    grand_total: string;
+    currency: string;
+    status: string;
+    payment_status: string;
+    placed_at: string;
+    paid_at: string | null;
+    cancelled_at: string | null;
+};
+export type OrderDetail = OrderSummary & {
+    documents: import('@/lib/invoicing').DocumentSummary[];
+    refund_status: string;
+    software_access: 'active' | 'inactive' | 'pending';
+    company_name: string | null;
+    billing_email: string;
+    phone: string | null;
+    address_line_1: string;
+    address_line_2: string | null;
+    city: string;
+    state_region: string;
+    postal_code: string;
+    country_code: string;
+    subtotal: string;
+    tax_total: string;
+    discount_total: string;
+    items: {
+        item_id: number;
+        support_entry: { url: string | null };
+        review_entry: {
+            eligible: boolean;
+            url: string | null;
+            label: string | null;
+        };
+        refund_status: string;
+        refund_eligible: boolean;
+        refund_explanation: string;
+        refund: {
+            uuid: string;
+            reference: string;
+            status: string;
+            completed_at: string | null;
+        } | null;
+        product_name: string;
+        product_slug: string;
+        offer_name: string;
+        offer_description: string | null;
+        license_type: string;
+        unit_price: string;
+        line_total: string;
+        currency: string;
+        quantity: number;
+        support_period_days: number | null;
+        updates_period_days: number | null;
+        version: string;
+        origin: string;
+        seller_name: string | null;
+    }[];
+    payments: {
+        amount: string;
+        currency: string;
+        status: string;
+        failure_code: string | null;
+        failure_message: string | null;
+        created_at: string;
+        paid_at: string | null;
+        simulation_key: string | null;
+        provider_name?: string;
+        external?: Record<string, string | null>;
+        provider?: string;
+        provider_payment_id?: string;
+        provider_order_id?: string;
+    }[];
+};
